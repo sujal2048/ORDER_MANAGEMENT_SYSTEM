@@ -23,7 +23,7 @@ When a new BUY order arrives, we try to match with existing SELL orders. We iter
 
 2.For modify: we need to find order, remove from current book (if it was in book), update its price/quantity, then re-match if it's a new order? Actually modify can change price or quantity.
 in matching engines, modify retains its time priority? Typically, modify can be treated as cancel + new, but sometimes the time priority resets. 
-# We'll treat as cancel + new: we remove the order from the book (if it was there) and then create a new order with the same ID but new parameters and current timestamp.
+### We'll treat as cancel + new: we remove the order from the book (if it was there) and then create a new order with the same ID but new parameters and current timestamp.
 We'll also update the order map accordingly. For cancel: remove from book and from orders map. For PRINT: output current state of order book and positions? Could be debugging. We'll implement PRINT that prints buy and sell book levels
 
 # concurrency
