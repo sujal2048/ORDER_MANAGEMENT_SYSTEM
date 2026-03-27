@@ -1,7 +1,6 @@
 #include "session.h"
-#include <boost/beast/websocket.hpp>
 #include <nlohmann/json.hpp>
-#include "matching_engine.h"
+#include <iostream>
 
 Session::Session(boost::asio::ip::tcp::socket socket, matching::MatchingEngine& engine)
     : ws_(std::move(socket)), engine_(engine) {}
@@ -14,7 +13,7 @@ void Session::start() {
 
 void Session::do_read() {
     ws_.async_read(buffer_,
-        [self = shared_from_this()](boost::system::error_code ec, std::size_t bytes) {
+        [self = shared_from_this()](boost::system::error_code ec, std::size_t /*bytes*/) {
             if (ec) return;
             self->handle_message();
             self->do_read();
@@ -52,11 +51,15 @@ void Session::handle_message() {
 
         auto self = shared_from_this();
         cmd.response_callback = [self](const std::string& resp) {
-            self->ws_.write(boost::asio::buffer(resp));
+            boost::asio::post(self->ws_.get_executor(),
+                [self, resp]() {
+                    self->ws_.write(boost::asio::buffer(resp));
+                });
         };
 
         engine_.submitCommand(std::move(cmd));
     } catch (const std::exception& e) {
-        ws_.write(boost::asio::buffer(std::string("{\"error\":\"") + e.what() + "\"}"));
+        std::string err = R"({"error":")" + std::string(e.what()) + R"("})";
+        ws_.write(boost::asio::buffer(err));
     }
 }
