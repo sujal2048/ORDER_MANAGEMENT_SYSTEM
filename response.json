@@ -1,0 +1,8 @@
+{"status":"accepted","order_id":1}
+{"status":"accepted","order_id":2}
+{"type":"book","buys":[{"price":100,"qty":20}],"sells":[],"clients":[{"id":100,"net_position":30,"pnl":-2970},{"id":101,"net_position":-30,"pnl":2970}]}
+{"status":"cancelled","order_id":1}       #cancelled left over quantity
+
+
+{"status":"accepted","order_id":4}
+#The old order is cancelled and a new one (with updated price/quantity) is placed.
