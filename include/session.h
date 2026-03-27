@@ -1,5 +1,7 @@
 #pragma once
+
 #include <boost/beast/websocket.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include <memory>
 #include "matching_engine.h"
 
