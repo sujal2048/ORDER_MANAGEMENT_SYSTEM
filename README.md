@@ -31,3 +31,15 @@ We'll also update the order map accordingly. For cancel: remove from book and fr
 The matching engine runs in a separate thread, consuming commands from a thread-safe queue. WebSocket sessions (multiple) produce commands into the queue. The engine processes commands one by one, and for each command, it may produce a response (e.g., ack, fill notification, book state). The engine needs to send responses back to the appropriate client session. We need to associate each command with the connection that sent it, so that we can send response back. We can store in the command a weak_ptr or a reference to the session, or we can have a global map from client_id to session? But multiple sessions per client? Probably not. Since we have client_id in the request, we can send response to the same session. We'll need to pass the session's write queue. But to avoid coupling, we can have the command contain a callback function to send response. We'll use std::function<void(const std::string&)> to send message back. That way the engine doesn't need to know about sessions. When a session receives a command, it creates a Command object with the parsed data and a lambda that captures the session's write function (e.g., via weak_ptr). Then it pushes to the queue. The engine processes, and when done, invokes the callback with the response.
 
 We have used a thread-safe queue. We can use a lock-based queue with condition variable. We'll implement a simple concurrent queue.
+
+#BUILD 
+--expecting user to be in /home/user/
+mkdir build
+cd /home/user/build
+rm -rf *
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+
+
+After successfull completion start the server
+./order_matching_engine
