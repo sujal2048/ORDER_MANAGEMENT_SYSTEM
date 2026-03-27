@@ -10,6 +10,7 @@
 #include <string>
 #include <thread>
 #include <unordered_map>
+#include <condition_variable>   // <-- added
 
 namespace matching {
 
