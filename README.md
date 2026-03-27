@@ -32,8 +32,11 @@ The matching engine runs in a separate thread, consuming commands from a thread-
 
 We have used a thread-safe queue. We can use a lock-based queue with condition variable. We'll implement a simple concurrent queue.
 
-#BUILD 
---expecting user to be in /home/user/
+# BUILD 
+
+--expecting user to be in directory /home/user/ 
+
+
 mkdir build
 cd /home/user/build
 rm -rf *
@@ -42,4 +45,4 @@ make -j$(nproc)
 
 
 After successfull completion start the server
-./order_matching_engine
+./order_matching_engine --port 8080
