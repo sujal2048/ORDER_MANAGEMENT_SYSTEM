@@ -11,8 +11,7 @@ include_directories(include)
 
 add_executable(order_matching_engine
     src/matching_engine.cpp
-    src/main.cpp
-    src/server.cpp   # WebSocket server implementation
+    src/server.cpp
     src/session.cpp
 )
 
@@ -22,5 +21,5 @@ target_link_libraries(order_matching_engine
     nlohmann_json::nlohmann_json
 )
 
-enable_testing()
-add_subdirectory(tests)
+# If you have tests later, you can add them
+# add_subdirectory(tests)
