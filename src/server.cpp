@@ -1,9 +1,10 @@
 #include <boost/asio/io_context.hpp>
+#include <boost/asio/signal_set.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
+#include <iostream>
 #include <memory>
-#include <thread>
 #include "matching_engine.h"
 #include "session.h"
 
