@@ -38,11 +38,16 @@ We have used a thread-safe queue. We can use a lock-based queue with condition v
 
 
 mkdir build
+
 cd /home/user/build
+
 rm -rf *
+
 cmake .. -DCMAKE_BUILD_TYPE=Release
+
 make -j$(nproc)
 
 
 After successfull completion start the server
+
 ./order_matching_engine --port 8080
