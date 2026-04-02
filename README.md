@@ -51,3 +51,11 @@ make -j$(nproc)
 After successfull completion start the server
 
 ./order_matching_engine --port 8080
+
+# Testing
+
+cd /home/user/build
+
+make tests
+
+./tests/unit_tests
